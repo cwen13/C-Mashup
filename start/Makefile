@@ -1,4 +1,3 @@
 
-
-all: %.c
-	$(CC) -c $(CPPFLAGS) $(CFLAGS) %.c -o %.o
+start: start.c
+	gcc $< -o $@.o

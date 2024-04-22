@@ -34,6 +34,7 @@ int printProg(char *name){
   
   printf("-----------------------------\nThe program name is %s.", name);
   printf("\nPlease enter a scentence to print out: ");
+  
   //  scanf("%s", &words);
   
   getline(&words,&size,stdin);
@@ -52,14 +53,13 @@ int printProg(char *name){
 	  // insert null term so only print out the word
 	  *(word + (i - delta)) = '\0';	  
 	  //	  printf("There is a <SPACE> in my boot!\n");
-	  printf("The word is: %s\n", word);
-	  
+	  printf("The word is: %s\n", word);	  
 	  delta = i + 1;
 	  
 	}
       else
 	{
-	  printf("This is the letter: %c\n", words[i]);
+	  // printf("This is the letter: %c\n", words[i]);
 	  //	  printf("This is i minus delt: %d\n", (i - delta));
 	  *(word + (i - delta)) = words[i];
 	}
