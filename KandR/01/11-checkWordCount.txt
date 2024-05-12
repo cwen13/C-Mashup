@@ -1,0 +1,12 @@
+Exercise 1-11:
+How would you test the word count program? What kinds of input are most
+likely to uncover bugs if there are any?
+
+ANS:
+-Words that extend onto two lines
+-use not standard ASCII input
+-use different languages
+-run through multiple sources of input
+
+Way to catch errors
+-run it so that each word is output on a singe line and check those against words in that language

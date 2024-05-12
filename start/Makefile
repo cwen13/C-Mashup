@@ -1,3 +1,3 @@
 
 start: start.c
-	gcc $< -o $@.o
+	gcc -g $< -o $@.o
