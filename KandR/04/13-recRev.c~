@@ -1,0 +1,60 @@
+/*
+  Exercise 4-13:
+  Write a recursive version of the function reverse(s), which reverses
+  the string s in place.
+ */
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#define MAXLINE 100
+
+void reverse(char s[]);
+void reverse_rec(char s[], int start, int end);
+
+
+int main()
+{
+
+  char *input = NULL;
+  int len;
+  long unsigned int n = 0;
+  
+  while((len = getline(&input, &n, stdin)) > 0)
+    {
+      reverse(input);
+      printf("%s\n", input);
+    }
+
+  free(input);
+  return 0;
+}
+
+void reverse(char s[])
+{
+
+  int len = strlen(s);
+  if(len>0 && s[len-1] =='\n')
+    {
+      s[--len] = '\0';
+    }
+  
+  return reverse_rec(s,0,strlen(s)-1);
+}
+
+void reverse_rec(char s[], int start, int end)
+{
+  if(start >= end)
+    {
+
+      return;
+    }
+
+  char tmp;
+  tmp=s[start];
+  s[start]=s[end];
+  s[end]=tmp;
+
+  return  reverse_rec(s, ++start, -end);
+}

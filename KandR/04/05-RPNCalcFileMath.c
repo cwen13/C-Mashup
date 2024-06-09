@@ -1,14 +1,17 @@
 /*
-  Exercise 4-3:
-   Given the basic framework, it's straightforward to extend the calculator.
-   Add the modulus (%) operator and provisions for negative numbers.
+  Exercise 4-4:
+   Add the commands to print the top elements of the stack without popping,
+   to duplicate it, and to swap the top two elements. Add a command to
+   clear the stack.
  */
 
 /* firs think of it in a single file
-   Afterwards there is a disscussion of what to do to seperate them into files */
+   Afterwards there is a disscussion of what to do to seperate them into files
+*/
 #include <stdio.h>
 #include <stdlib.h> // for atof()
 #include <ctype.h>
+#include <math.h>
 
 #define MAXOP 100   // max number of op/operands
 #define MAXVAL 100
@@ -26,6 +29,8 @@ void push(double);
 double pop(void);
 int getch(void); 
 void ungetch(int);
+// added in 4-4
+void printStackTop();
 
 /* RPN Calculator */
 int main()
@@ -41,20 +46,69 @@ int main()
 	case NUMBER:
 	  push(atof(s));
 	  break;
-	  // since '+' and '*' are cummutative operand order does not matter
+         // letter maintainence actions
+	case 'p':
+	  // print last 5 elements of the stack
+	  printStackTop();
+	  break;
+	case 'd':
+	  // duplicate the top of the stack
+	  double dup = pop();
+	  push(dup);
+	  push(dup);
+	  break;
+	case 's':
+	  //swap top two elements
+	  double temp0 = pop();
+	  double temp1= pop();
+	  push(temp0);
+	  push(temp1);
+	  break;
+	case 'c':
+	  while(sp>0)
+	    {
+	      pop();
+	    }
+	  break;
+
+	  // Trig Actions
+	case 'S':
+	  // SINE
+	  push(sin(pop()));
+	  break;
+	case 'C':
+	  // COSINE
+	  push(cos(pop()));
+	  break;
+	case 'E':
+	  // exponential value
+	  push(exp(pop()));
+	  break;
+	case 'P':
+	  // rasiing x to a power y
+	  push(pow(pop(), pop()));
+	  break;
+	  
+	  // Arithamtic Actions
 	case '+':
+	  // since '+' and '*' are cummutative operand order does not matter
+	  // both numbers are addends or summands
 	  push(pop() + pop());
 	  break;
 	case '*':
+	  // both numbers generall called factors
 	  push(pop() * pop());
 	  break;
-	  // need to get teh seond number out before popping 
 	case '-':
-	  op2 = pop();
+	  // need to get the second number, subtrahend, out to then
+	  // pop the first number, minuend.
+	  op2 = pop(); // subtrahend
 	  push(pop() - op2);
 	  break;
 	case '/':
-	  op2 = pop();
+	  // need to get the second number, divisor, out to then
+	  // pop the first number, dividend.
+	  op2 = pop(); // divisor
 	  if(op2 != 0.0)
 	    {
 	      push(pop() / op2);
@@ -74,7 +128,8 @@ int main()
 	    {
 	      printf("error: zero divisor\n");
 	    }
-	  break;	   
+	  break;
+	  
 	case '\n':
 	default:
 	  printf("This is the default case: %c\n", s);
@@ -126,16 +181,11 @@ int getop(char s[])
 
   if(c == '-')
     {
-      s[0] = c;
-      s[1] = c = getch();
-      s[2] = '\0';
-      i++;
+      s[i++] = c;
+      s[i] = c = getch();      
     }
-  else
-    {
-      s[1] = '\0';
-    }
-  
+  s[i+1] = '\0';
+
   if(!isdigit(c) && c != '.' && c != '-')
     {
       return c; // not a number
@@ -175,4 +225,13 @@ void ungetch(int c) // push char back into input, ungetch is a function in C lib
   return;
 }
 
+void printStackTop()
+{
+  int i = ((sp - 5) > 0) ? sp-5 : 0;
+    for(i; i < sp  ; i++)
+    {
+      printf("> %4f\n", val[i]);
+    }
 
+  return;
+}

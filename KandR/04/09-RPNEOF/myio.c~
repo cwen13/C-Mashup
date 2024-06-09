@@ -1,0 +1,35 @@
+// DID NOIT SOLVE 
+/*
+  Exercise 4-8:
+  Suppose that there will never be more than one character of pushback.
+  Modify getch and ungetch accordingly.
+*/
+
+#include "myio.h"
+#include <stdio.h>
+#include <ctype.h>
+
+#define BUFSIZE 16
+
+int getch(void) 
+{
+  if(ibuf)
+    {
+      ibuf = 0;
+      return buffchar;
+    }
+
+  return getchar();
+}
+
+int ungetch(int c) 
+{
+  if (ibuf || == EOF) {
+
+    return -1;
+  }
+  buff[ibuf++] = c;
+
+  return 0;
+}
+
