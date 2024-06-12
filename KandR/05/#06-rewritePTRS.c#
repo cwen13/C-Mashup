@@ -11,7 +11,6 @@
 
 #include <stdio.h>
 #include <ctype.h>
-//#include <string.h>
 
 #define MAXLINE 80
 #define CINTLEN 20
@@ -78,7 +77,6 @@ int main()
 
   return 0;
 }
-
 
 int mygetline(char *s, int n)
 {
